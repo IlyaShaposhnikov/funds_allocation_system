@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import InvestInfoAndDatesAbstractModel
+from app.crud.base_repository import BaseRepository  # noqa
 
 
 class InvestmentService:
@@ -79,11 +80,5 @@ class InvestmentService:
                     distributed.fully_invested = True
                     distributed.close_date = datetime.now()
                     break
-
-        for item in processed_items:
-            session.add(item)
-        await session.commit()
-        for item in processed_items:
-            await session.refresh(item)
 
         return distributed
