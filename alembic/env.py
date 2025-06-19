@@ -11,9 +11,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from app.core.db import Base 
-from app.models.charity_project import CharityProject  
-from app.models.donation import Donation
+from app.core.db import Base  # noqa
+from app.models.charity_project import CharityProject  # noqa
+from app.models.donation import Donation  # noqa
 
 # Конфигурация Alembic
 config = context.config
