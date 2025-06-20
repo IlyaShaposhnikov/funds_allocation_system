@@ -13,8 +13,7 @@ from app.crud.donation import donation_crud
 from app.schemas.charity_project import (CharityProjectDB,
                                          CharityProjectCreate,
                                          CharityProjectUpdate)
-from app.services.investment import \
-    distribute_donations as donations_distribution
+from app.services.investment import distribute_donations
 from app.services.project_service import prepare_project_update_data
 
 router = APIRouter()
@@ -32,7 +31,7 @@ async def create_charity_project(
         session: AsyncSession = Depends(get_async_session)
 ) -> CharityProjectDB:
     await check_project_name_duplicate(project.name, session)
-    return await donations_distribution(
+    return await distribute_donations(
         distributed=await charity_project_crud.create(project, session),
         destinations=await donation_crud.get_opens(session),
         session=session
