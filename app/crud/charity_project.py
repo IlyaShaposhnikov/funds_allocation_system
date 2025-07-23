@@ -1,9 +1,9 @@
 from datetime import datetime
 from http import HTTPStatus
-from typing import Optional
+from typing import List, Optional
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.base_charity_repository import BaseCharityRepository
@@ -47,6 +47,19 @@ class CRUDCharityProject(BaseCharityRepository[CharityProject]):
                 detail=f'Проект с id {object_id} не найден'
             )
         return project
+
+    @staticmethod
+    async def get_projects_by_completion_rate(session: AsyncSession)\
+            -> List[CharityProject]:
+        charity_projects = await session.execute(
+            select(CharityProject).
+            where(CharityProject.fully_invested).
+            order_by(func.julianday(
+                CharityProject.close_date) - func.julianday(
+                CharityProject.create_date)
+            )
+        )
+        return charity_projects.scalars().all()
 
 
 charity_project_crud = CRUDCharityProject(CharityProject)
