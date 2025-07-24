@@ -22,8 +22,8 @@ dnspython==2.2.1
 email-validator==1.2.1
 Faker==12.0.1
 fastapi==0.78.0
-fastapi-users==10.0.4
-fastapi-users-db-sqlalchemy==4.0.3
+fastapi-users==9.3.0
+fastapi-users-db-sqlalchemy==3.0.0
 flake8==4.0.1
 freezegun==1.2.1
 frozenlist==1.7.0
