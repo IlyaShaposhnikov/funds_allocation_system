@@ -29,6 +29,5 @@ async def get_report(
                              get_projects_by_completion_rate(session))
     spreadsheetid = await create_spreadsheet(wrapper_services)
     await set_user_permissions(spreadsheetid, wrapper_services)
-    await update_spreadsheet(spreadsheetid,
-                                    charity_project, wrapper_services)
+    await update_spreadsheet(spreadsheetid, charity_project, wrapper_services)
     return charity_project
