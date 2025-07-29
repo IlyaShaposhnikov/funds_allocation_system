@@ -16,6 +16,7 @@ class CharityProject(InvestInfoAndDatesAbstractModel):
         name (str): Название проекта (макс. 100 символов, уникальное)
         description (str): Описание проекта (текст)
     """
+
     name = Column(String(100), unique=True, nullable=False)
     description = Column(Text, nullable=False)
 

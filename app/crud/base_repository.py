@@ -16,7 +16,7 @@ class BaseRepository(Generic[T]):
     - Создание (create)
     - Чтение (get, get_or_404, get_all)
     - Обновление (update)
-    - Удаление (delete, remove)
+    - Удаление (delete)
     """
     def __init__(self, model):
         self.model = model
@@ -57,13 +57,13 @@ class BaseRepository(Generic[T]):
             object_id: int,
             session: AsyncSession,
     ) -> T:
-        object = await self.get(object_id, session)
-        if object is None:
+        db_obj = await self.get(object_id, session)
+        if db_obj is None:
             raise HTTPException(
                 status_code=HTTPStatus.NOT_FOUND,
                 detail=f'{self.model.__name__} с id {object_id} не найден'
             )
-        return object
+        return db_obj
 
     async def get_all(
             self,
@@ -94,20 +94,6 @@ class BaseRepository(Generic[T]):
         return await self.save(db_object, session)
 
     async def delete(
-            self,
-            db_object: T,
-            session: AsyncSession,
-    ) -> T:
-        if db_object is None:
-            raise HTTPException(
-                status_code=HTTPStatus.NOT_FOUND,
-                detail=f'Объект {self.model.__name__} не найден'
-            )
-        await session.delete(db_object)
-        await session.commit()
-        return db_object
-
-    async def remove(
             self,
             db_object: T,
             session: AsyncSession,

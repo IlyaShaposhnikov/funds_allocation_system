@@ -5,6 +5,8 @@ from pydantic import BaseModel, Extra, Field, PositiveInt, validator
 
 
 class CharityProjectBase(BaseModel):
+    """Базовая схема для проекта с необязательными полями."""
+
     name: Optional[str] = Field(
         None, min_length=1, max_length=100)
     description: Optional[str] = Field(None, min_length=1)
@@ -15,6 +17,8 @@ class CharityProjectBase(BaseModel):
 
 
 class CharityProjectCreate(CharityProjectBase):
+    """Схема для создания нового благотворительного проекта."""
+
     name: str = Field(
         ..., min_length=1, max_length=100)
     description: str = Field(..., min_length=1)
@@ -22,6 +26,7 @@ class CharityProjectCreate(CharityProjectBase):
 
 
 class CharityProjectUpdate(CharityProjectBase):
+    """Схема для обновления существующего проекта с валидацией полей."""
 
     @validator('name')
     def name_cannot_be_empty(cls, value):
@@ -31,6 +36,8 @@ class CharityProjectUpdate(CharityProjectBase):
 
 
 class CharityProjectDB(CharityProjectCreate):
+    """Схема для возврата проекта из БД со всеми служебными полями."""
+
     id: int
     invested_amount: int
     fully_invested: bool = False

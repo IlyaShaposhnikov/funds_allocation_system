@@ -1,3 +1,5 @@
+from typing import AsyncGenerator
+
 from aiogoogle import Aiogoogle
 from aiogoogle.auth.creds import ServiceAccountCreds
 
@@ -23,6 +25,8 @@ INFO = {
 cred = ServiceAccountCreds(scopes=SCOPES, **INFO)
 
 
-async def get_service():
+async def get_service() -> AsyncGenerator[Aiogoogle, None]:
+    """Асинхронный генератор для получения экземпляра Aiogoogle."""
+
     async with Aiogoogle(service_account_creds=cred) as aiogoogle:
         yield aiogoogle

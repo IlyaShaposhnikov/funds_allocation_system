@@ -17,6 +17,7 @@ class Donation(InvestInfoAndDatesAbstractModel):
                        (внешний ключ к таблице user)
         comment (str, optional): Комментарий к пожертвованию
     """
+
     user_id = Column(
         Integer,
         ForeignKey('user.id', name='fk_donation_user_id_user')
