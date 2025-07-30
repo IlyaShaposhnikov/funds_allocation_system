@@ -19,7 +19,6 @@ class CloseService:
         session: AsyncSession
     ) -> InvestInfoAndDatesAbstractModel:
         """Помечает инвестиционный объект как закрытый (fully_invested).
-
         Устанавливает флаг fully_invested в True и текущую дату в close_date,
         затем сохраняет изменения в базе данных.
         """

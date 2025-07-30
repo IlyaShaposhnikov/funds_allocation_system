@@ -4,15 +4,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models import InvestInfoAndDatesAbstractModel
 from app.crud.base_repository import BaseRepository  # noqa
+from app.crud.investment_repository import CRUDInvestment
 
 
 class InvestmentService:
     """Сервис для работы с инвестиционными операциями.
 
     Предоставляет методы для:
-    - Расчета остатка средств
-    - Пометки объектов как полностью проинвестированных
-    - Распределения средств между объектами
+    - Расчета остатка средств;
+    - Пометки объектов как полностью проинвестированных;
+    - Распределения средств между объектами.
     """
 
     @staticmethod
@@ -47,12 +48,12 @@ class InvestmentService:
         """Распределяет средства между объектами по алгоритму FIFO.
 
         Алгоритм:
-        1. Итерирует по получателям в порядке очереди
+        1. Итерирует по получателям в порядке очереди;
         2. Распределяет средства пока не закончатся:
-           - Либо средства источника
-           - Либо потребности получателей
-        3. Помечает полностью заполненные объекты
-        4. Сохраняет все изменения в БД
+           - Либо средства источника;
+           - Либо потребности получателей;
+        3. Помечает полностью заполненные объекты;
+        4. Сохраняет все изменения в БД.
         """
         processed_items = [distributed]
         for destination in destinations:
@@ -81,4 +82,9 @@ class InvestmentService:
                     distributed.close_date = datetime.now()
                     break
 
+        await CRUDInvestment.save_investment_objects(
+            session,
+            distributed,
+            *destinations
+        )
         return distributed

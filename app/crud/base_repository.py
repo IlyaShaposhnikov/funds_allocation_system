@@ -13,11 +13,12 @@ class BaseRepository(Generic[T]):
     """Базовый репозиторий для CRUD операций с моделями SQLAlchemy.
 
     Предоставляет общие методы для работы с базой данных:
-    - Создание (create)
-    - Чтение (get, get_or_404, get_all)
-    - Обновление (update)
-    - Удаление (delete)
+    - Создание (create);
+    - Чтение (get, get_or_404, get_all);
+    - Обновление (update);
+    - Удаление (delete).
     """
+
     def __init__(self, model):
         self.model = model
 

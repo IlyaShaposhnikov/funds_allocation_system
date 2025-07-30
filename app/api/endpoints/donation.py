@@ -5,10 +5,10 @@ from app.core.db import get_async_session
 from app.core.user import current_superuser, current_user
 from app.crud.charity_project import charity_project_crud
 from app.crud.donation import donation_crud
-from app.crud.investment_repository import CRUDInvestment
 from app.models import User
 from app.schemas.donation import (DonationCreate, DonationForAdminDB,
                                   DonationForUserDB)
+from app.services.investment_service import InvestmentService
 
 router = APIRouter()
 
@@ -24,10 +24,12 @@ async def create_donation(
         session: AsyncSession = Depends(get_async_session),
         user: User = Depends(current_user),
 ):
-    return await CRUDInvestment().execute_distribution(
-        source=await donation_crud.create(donation, session, user),
-        targets=await charity_project_crud.get_opens(session),
-        session=session,
+    new_donation = await donation_crud.create(donation, session, user)
+    open_projects = await charity_project_crud.get_opens(session)
+    return await InvestmentService.distribute_funds(
+        distributed=new_donation,
+        destinations=open_projects,
+        session=session
     )
 
 
