@@ -15,7 +15,7 @@ class BaseCharityRepository(BaseRepository[T]):
 
     Обеспечивает общие операции для моделей CharityProject и Donation.
     """
-    
+
     def __init__(self, model):
         super().__init__(model)
 
