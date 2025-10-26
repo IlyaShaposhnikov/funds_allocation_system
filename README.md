@@ -1,6 +1,6 @@
-# Cat Charity Fund API
+# Funds Allocation API
 
-FastAPI-приложение для управления благотворительными проектами помощи котам
+FastAPI-приложение для управления финансовыми проектами
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.68.0-green.svg)](https://fastapi.tiangolo.com)
@@ -20,7 +20,7 @@ FastAPI-приложение для управления благотворит�
 ### 1. Клонирование репозитория и установка зависимостей
 
 ```bash
-git clone https://github.com/IlyaShaposhnikov/cat_charity_fund.git
+git clone https://github.com/IlyaShaposhnikov/funds_allocation_system.git
 py -3.9 -m venv venv
 source venv/Scripts/activate
 python -m pip install --upgrade pip
@@ -98,4 +98,5 @@ cat_charity_fund/
    ```
 
 ## Автор
-- Шапошников Илья
+Илья Шапошников
+ilia.a.shaposhnikov@gmail.com
